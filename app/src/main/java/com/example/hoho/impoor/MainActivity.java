@@ -1,5 +1,6 @@
 package com.example.hoho.impoor;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,13 +20,14 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView mainListView;
     ArrayList<FinanceItem> financeItems = new ArrayList<FinanceItem>();
+    Intent addnew;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // setSupportActionBar(toolbar);
 
         mainListView = (ListView) findViewById(R.id.mainListView);
 
@@ -47,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
         mainListView.setAdapter(adapter);
 
+        addnew = new Intent(this,
+                AddNewItemActivity.class);
 
 
 
@@ -59,8 +63,17 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        FloatingActionButton myFab = (FloatingActionButton) findViewById(R.id.fab);
+        myFab.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(addnew);
+            }
+        });
     }
 
+
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -82,4 +95,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    */
 }
