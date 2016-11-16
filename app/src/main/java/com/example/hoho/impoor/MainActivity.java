@@ -19,7 +19,7 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
 
     private ListView mainListView;
-    ArrayList<FinanceItem> financeItems = new ArrayList<FinanceItem>();
+    public static ArrayList<FinanceItem> financeItems = new ArrayList<FinanceItem>();
     Intent addnew;
 
     @Override
@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         mainListView = (ListView) findViewById(R.id.mainListView);
 
+        financeItems.clear();
         FinanceItem fi1 = new FinanceItem("finance item 1", new Date(), 20.30);
         FinanceItem fi2 = new FinanceItem("finance item 2", new Date(), 50.64);
         FinanceItem fi3 = new FinanceItem("finance item 3", new Date(), 12.78);
@@ -70,6 +71,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(addnew);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String[] listItems = new String[financeItems.size()];
+        for(int i = 0; i < financeItems.size(); i ++) {
+            FinanceItem financeItem = financeItems.get(i);
+            listItems[i] = financeItem.name + " $" + financeItem.amount;
+        }
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
+        mainListView.setAdapter(adapter);
+
     }
 
 
