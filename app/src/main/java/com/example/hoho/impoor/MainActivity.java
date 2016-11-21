@@ -3,23 +3,19 @@ package com.example.hoho.impoor;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
     private ListView mainListView;
-    public static ArrayList<FinanceItem> financeItems = new ArrayList<FinanceItem>();
+    //public static ArrayList<FinanceItem> financeItems = new ArrayList<FinanceItem>();
+    public static ArrayList<FinanceItem> financeItem;
     Intent addnew;
 
     @Override
@@ -31,24 +27,33 @@ public class MainActivity extends AppCompatActivity {
 
         mainListView = (ListView) findViewById(R.id.mainListView);
 
-        financeItems.clear();
-        FinanceItem fi1 = new FinanceItem("finance item 1", new Date(), 20.30);
-        FinanceItem fi2 = new FinanceItem("finance item 2", new Date(), 50.64);
-        FinanceItem fi3 = new FinanceItem("finance item 3", new Date(), 12.78);
-        financeItems.add(fi1);
-        financeItems.add(fi2);
-        financeItems.add(fi3);
+
+        DBHandler db = new DBHandler(this);
+        financeItem = db.getFinanceItems();
 
 
-        String[] listItems = new String[financeItems.size()];
-        for(int i = 0; i < financeItems.size(); i ++) {
-            FinanceItem financeItem = financeItems.get(i);
+        String[] listItems = new String[financeItem.size()];
+        for(int i = 0; i < financeItem.size(); i ++) {
+            FinanceItem financeItem = MainActivity.financeItem.get(i);
             listItems[i] = financeItem.name;
         }
 
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
         mainListView.setAdapter(adapter);
+        mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent viewItemIntent = new Intent(getApplicationContext(), ViewItemActivity.class);
+
+                FinanceItem financeItem = MainActivity.financeItem.get(i);
+                viewItemIntent.putExtra("name_value", financeItem.name.toString());
+                viewItemIntent.putExtra("amount_value", financeItem.amount.toString());
+                viewItemIntent.putExtra("date_value", financeItem.date.toString());
+
+                startActivity(viewItemIntent);
+            }
+        });
 
         addnew = new Intent(this,
                 AddNewItemActivity.class);
@@ -56,15 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         // FAB
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         FloatingActionButton myFab = (FloatingActionButton) findViewById(R.id.fab);
         myFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -76,16 +72,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        String[] listItems = new String[financeItems.size()];
-        for(int i = 0; i < financeItems.size(); i ++) {
-            FinanceItem financeItem = financeItems.get(i);
+        String[] listItems = new String[financeItem.size()];
+        for(int i = 0; i < financeItem.size(); i ++) {
+            FinanceItem financeItem = MainActivity.financeItem.get(i);
             listItems[i] = financeItem.name + " $" + financeItem.amount;
         }
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
         mainListView.setAdapter(adapter);
-
     }
-
 
     /*
     @Override

@@ -10,10 +10,12 @@ public class FinanceItem {
     public String name;
     public Date date;
     public Double amount;
+    public String category;
 
     public FinanceItem(String name, Date date, Double amount) {
         this.name = name;
         this.date = date;
         this.amount = amount;
+        this.category = "unsorted";
     }
 }
