@@ -11,11 +11,21 @@ public class FinanceItem {
     public Date date;
     public Double amount;
     public String category;
+    public boolean gain;
+
+    public FinanceItem(String name, Date date, Double amount, boolean gain) {
+        this.name = name;
+        this.date = date;
+        this.amount = amount;
+        this.category = "unsorted";
+        this.gain = gain;
+    }
 
     public FinanceItem(String name, Date date, Double amount) {
         this.name = name;
         this.date = date;
         this.amount = amount;
         this.category = "unsorted";
+        this.gain = false;
     }
 }

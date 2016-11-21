@@ -3,6 +3,8 @@ package com.example.hoho.impoor;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -16,6 +18,7 @@ public class ViewItemActivity extends Activity {
     TextView date_value;
     TextView amount_title;
     TextView amount_value;
+    Button btn_remove;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,9 +31,21 @@ public class ViewItemActivity extends Activity {
         amount_title = (TextView) findViewById(R.id.tv_amount_title);
         amount_value = (TextView) findViewById(R.id.tv_amount_value);
 
-        Intent thisActivity = getIntent();
+        final Intent thisActivity = getIntent();
         name_value.setText(thisActivity.getStringExtra("name_value"));
         date_value.setText(thisActivity.getStringExtra("date_value"));
         amount_value.setText(thisActivity.getStringExtra("amount_value"));
+        btn_remove = (Button) findViewById(R.id.btn_remove);
+        btn_remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DBHandler db = new DBHandler(ViewItemActivity.this);
+                db.removeFinanceItem(thisActivity.getStringExtra("name_value"),
+                        thisActivity.getStringExtra("amount_value"));
+                db.close();
+                finish();
+
+            }
+        });
     }
 }
