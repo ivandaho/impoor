@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.hoho.impoor.AddNewItemActivity">
 
+    <!--
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -27,6 +28,7 @@
             android:layout_weight="1"
             android:onClick="changeToEarn" />
     </LinearLayout>
+        -->
 
     <EditText
         android:layout_width="match_parent"
@@ -44,16 +46,40 @@
         android:id="@+id/textfield_amount"
         android:hint="Amount Spent" />
 
-    <TextView
-        android:text="CURRENTDATE"
-        android:textAlignment="center"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:textSize="20dp"
-        android:id="@+id/tv_datePicker"
-        />
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="CURRENTDATE"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:textSize="20dp"
+            android:id="@+id/tv_datePicker"
+            android:drawableLeft="@drawable/ic_date_range_black_24dp" />
+    </LinearLayout>
+    <RadioGroup
+        android:layout_marginTop="20dp"
+        android:id="@+id/rg_transaction_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:onClick="changeToSpent"
+            android:text="I wasted money"
+            android:id="@+id/rb_tt_negative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:onClick="changeToEarn"
+            android:text="I earned money"
+            android:id="@+id/rb_tt_positive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
+    </RadioGroup>
     <Button
         android:text="add"
         android:layout_gravity="center"

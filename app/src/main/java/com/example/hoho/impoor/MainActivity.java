@@ -3,14 +3,11 @@ package com.example.hoho.impoor;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -18,8 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView mainListView;
     //public static ArrayList<FinanceItem> financeItems = new ArrayList<FinanceItem>();
-    public static ArrayList<FinanceItem> financeItem;
-    Intent addnew;
+    public static ArrayList<FinanceItem> financeItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,34 +25,14 @@ public class MainActivity extends AppCompatActivity {
         // setSupportActionBar(toolbar);
 
         mainListView = (ListView) findViewById(R.id.mainListView);
+        setFinanceItemAdapter();
 
-
-        DBHandler db = new DBHandler(this);
-        financeItem = db.getFinanceItems();
-
-
-        String[] listItems = new String[financeItem.size()];
-        for(int i = 0; i < financeItem.size(); i ++) {
-            FinanceItem fi = MainActivity.financeItem.get(i);
-            listItems[i] = fi.name + " $" + fi.amount;
-            if (fi.gain == true) {
-                listItems[i] += " +";
-            } else if (fi.gain == false) {
-                listItems[i] += " -";
-            } else {
-                listItems[i] += " ?";
-            }
-        }
-
-
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
-        mainListView.setAdapter(adapter);
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent viewItemIntent = new Intent(getApplicationContext(), ViewItemActivity.class);
 
-                FinanceItem financeItem = MainActivity.financeItem.get(i);
+                FinanceItem financeItem = MainActivity.financeItems.get(i);
                 viewItemIntent.putExtra("name_value", financeItem.name.toString());
                 viewItemIntent.putExtra("amount_value", financeItem.amount.toString());
                 SimpleDateFormat df = new SimpleDateFormat("EEEE, MMMM d, yyyy");
@@ -66,17 +42,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        addnew = new Intent(this,
-                AddNewItemActivity.class);
 
         // FAB
         FloatingActionButton myFab = (FloatingActionButton) findViewById(R.id.fab);
         myFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                DBHandler db = new DBHandler(MainActivity.this);
+                //DBHandler db = new DBHandler(MainActivity.this);
                 //db.dropAll();
+                Intent addNewItemIntent = new Intent(getApplicationContext(), AddNewItemActivity.class);
 
-                startActivity(addnew);
+                startActivity(addNewItemIntent);
             }
         });
     }
@@ -84,22 +59,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        DBHandler db = new DBHandler(this);
-        financeItem = db.getFinanceItems();
-        String[] listItems = new String[financeItem.size()];
-        for(int i = 0; i < financeItem.size(); i ++) {
-            FinanceItem fi = MainActivity.financeItem.get(i);
-            listItems[i] = fi.name + " $" + fi.amount;
-            if (fi.gain == true) {
-                listItems[i] += " +";
-            } else if (fi.gain == false) {
-                listItems[i] += " -";
-            } else {
-                listItems[i] += " ?";
-            }
-        }
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
-        mainListView.setAdapter(adapter);
+        setFinanceItemAdapter();
     }
 
     /*
@@ -125,4 +85,22 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     */
+    public void setFinanceItemAdapter() {
+        DBHandler db = new DBHandler(this);
+        financeItems = db.getFinanceItems();
+        String[] listItems = new String[financeItems.size()];
+        for(int i = 0; i < financeItems.size(); i ++) {
+            FinanceItem fi = MainActivity.financeItems.get(i);
+            listItems[i] = fi.name + " $" + fi.amount;
+            if (fi.gain == true) {
+                listItems[i] += " +";
+            } else if (fi.gain == false) {
+                listItems[i] += " -";
+            } else {
+                listItems[i] += " ?";
+            }
+        }
+        FinanceItemArrayAdapter adapter = new FinanceItemArrayAdapter(this, R.layout.list_item_layout, financeItems);
+        mainListView.setAdapter(adapter);
+    }
 }

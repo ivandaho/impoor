@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -29,6 +31,8 @@ public class AddNewItemActivity extends AppCompatActivity {
     final SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d, yyyy");
     Button proceedAdd;
     boolean gain = false;
+    RadioButton defaultRB;
+    RadioGroup rg;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -36,6 +40,10 @@ public class AddNewItemActivity extends AppCompatActivity {
         final Calendar c = Calendar.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addnew);
+
+        rg = (RadioGroup) findViewById(R.id.rg_transaction_type);
+        rg.check(R.id.rb_tt_negative);
+
         amountField = (EditText) findViewById(R.id.textfield_amount);
         nameField = (EditText) findViewById(R.id.textfield_name);
         tv_datePicker = (TextView) findViewById(R.id.tv_datePicker);
