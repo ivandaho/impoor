@@ -47,18 +47,21 @@
         android:hint="Amount Spent" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_height="wrap_content">
         <TextView
             android:text="CURRENTDATE"
-            android:textAlignment="center"
-            android:layout_width="match_parent"
+            android:includeFontPadding="false"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
-            android:textSize="20dp"
             android:id="@+id/tv_datePicker"
+            android:drawablePadding="8dp"
             android:drawableLeft="@drawable/ic_date_range_black_24dp" />
     </LinearLayout>
     <RadioGroup
@@ -80,11 +83,4 @@
             android:layout_height="wrap_content" />
 
     </RadioGroup>
-    <Button
-        android:text="add"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/proceedAdd"
-        android:onClick="addThis" />
 </LinearLayout>

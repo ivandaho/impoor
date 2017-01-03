@@ -1,68 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_margin="10dp"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/container_name"
+    <TextView
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_alignParentLeft="true"
-            android:text="Item Name:"
-            android:id="@+id/tv_name_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:layout_alignParentRight="true"
-            android:text="placeholder name value"
-            android:id="@+id/tv_name_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_below="@id/container_name"
-        android:id="@+id/container_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_alignParentLeft="true"
-            android:text="Date:"
-            android:id="@+id/tv_date_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:layout_alignParentRight="true"
-            android:text="placeholder date value"
-            android:id="@+id/tv_date_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_below="@id/container_date"
-        android:id="@+id/container_amount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_alignParentLeft="true"
-            android:text="Amount:"
-            android:id="@+id/tv_amount_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:layout_alignParentRight="true"
-            android:text="placeholder amount value"
-            android:id="@+id/tv_amount_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_amount_value"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textSize="50dp"
+        android:text="placeholder amount value"/>
+    <TextView
+        android:layout_below="@id/tv_amount_value"
+        android:layout_alignParentLeft="true"
+        android:text="placeholder name value"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:id="@+id/tv_name_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_below="@id/tv_name_value"
+        android:textSize="18dp"
+        android:layout_alignParentLeft="true"
+        android:text="placeholder date value"
+        android:id="@+id/tv_date_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     <Button
         android:text="remove"
         android:id="@+id/btn_remove"
-        android:layout_below="@id/container_amount"
+        android:layout_below="@id/tv_date_value"
         android:layout_marginTop="15dp"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"

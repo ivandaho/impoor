@@ -3,8 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.hoho.impoor.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_toggleColor"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="Toggle Item Colors"
         app:showAsAction="never" />
+    <item
+        android:title="Sort"
+        android:id="@+id/action_sortBy"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_sort_black_24dp"
+        app:showAsAction="always" />
 </menu>

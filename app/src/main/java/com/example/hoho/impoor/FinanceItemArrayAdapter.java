@@ -1,14 +1,24 @@
 package com.example.hoho.impoor;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.ConfigurationInfo;
+import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -33,12 +43,22 @@ public class FinanceItemArrayAdapter extends ArrayAdapter {
         LayoutInflater inflater = LayoutInflater.from(context);
         View row;
         row = inflater.inflate(R.layout.list_item_layout, parent, false);
+        TextView tv_date;
         TextView tv_name;
         TextView tv_amount;
+
         ImageView iv_net_result;
+
+        tv_date = (TextView) row.findViewById(R.id.item_tv_date);
         tv_name = (TextView) row.findViewById(R.id.item_tv_name);
         tv_amount = (TextView) row.findViewById(R.id.item_tv_amount);
         iv_net_result = (ImageView) row.findViewById(R.id.item_iv_net_result);
+
+        SimpleDateFormat df = new SimpleDateFormat("MM/d");
+        if (parent.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            df = new SimpleDateFormat("EEEE, MMMM d, yyyy");
+        }
+        tv_date.setText(df.format(data.get(i).date));
 
         tv_name.setText(data.get(i).name);
 
@@ -48,6 +68,18 @@ public class FinanceItemArrayAdapter extends ArrayAdapter {
             iv_net_result.setImageResource(R.drawable.ic_add_black_24dp);
         } else {
             iv_net_result.setImageResource(R.drawable.ic_remove_black_24dp);
+        }
+
+
+        SharedPreferences sp  = getContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        Boolean color = sp.getBoolean("color", false);
+
+        if (color) {
+            if (data.get(i).gain) {
+                row.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.netGain));
+            } else {
+                row.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.netLoss));
+            }
         }
 
         return (row);
